@@ -1,0 +1,66 @@
+pipeline TreePipeline {
+
+	// Pipeline
+	TreeExtractor 
+		-> TreeTextFileInterpreter
+		-> TreeCSVInterpreter
+        -> BauColumnDeleter
+		-> TreeTableInterpreter
+		-> TreeDatabaseLoader;
+	
+	// Get CSV file
+	block TreeExtractor oftype HttpExtractor {
+		url: 'https://opendata.rhein-kreis-neuss.de/api/v2/catalog/datasets/stadt-neuss-herbstpflanzung-2023/exports/csv';
+	}
+	// Text Interpreter
+	block TreeTextFileInterpreter oftype TextFileInterpreter { }
+
+	// CSV Interpreter
+	block TreeCSVInterpreter oftype CSVInterpreter {
+		delimiter: ';';
+	}
+
+	// Table Interpreter
+	block TreeTableInterpreter oftype TableInterpreter {
+		header: true;
+		columns: [
+            'lfd_nr' oftype integer,
+            'stadtteil' oftype VogelsangAllowConstrain,
+            'standort' oftype text,
+            'baumart_botanisch' oftype text,
+            'id' oftype GeoAllowConstrain,
+            'baumfamilie' oftype text
+		];
+	}
+
+    block BauColumnDeleter oftype ColumnDeleter {
+        delete: [column E];
+    }
+
+	// Generate the SQLITE database
+	block TreeDatabaseLoader oftype SQLiteLoader {
+		table: 'trees';
+		file: './trees.sqlite';
+	}
+
+    constraint VogelsangAllow oftype RegexConstraint {
+        regex: /^Vogelsang/;
+    }
+
+    valuetype VogelsangAllowConstrain oftype text {
+    // 10. Valuetypes can be Vogelsanger refined by providing constraints.
+        constraints: [
+            VogelsangAllow,
+        ];
+    }
+
+    constraint GeoAllow oftype RegexConstraint {
+        regex: /([0-9]{1,3}\.[0-9]+), ([0-9]{1,3}\.[0-9]+)/;
+    }
+
+    valuetype GeoAllowConstrain oftype text {
+        constraints: [
+            GeoAllow,
+        ];
+}
+}
