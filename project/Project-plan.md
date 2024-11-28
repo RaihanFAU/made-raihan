@@ -11,7 +11,6 @@ Analysis and Visualization of Stock Market Trends in Major Tech and Financial Co
 
 1. Can we use past data to forecast these firms' stock values or future trends?
 
-2. How does trading volume relate to stock price movements for each company, and can it be used as an indicator of significant price changes?
 
 
 ## Description
