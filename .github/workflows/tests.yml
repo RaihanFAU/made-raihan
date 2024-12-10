@@ -6,22 +6,22 @@ on:
       - main
 
 jobs:
-  run-test-script:
+  run-tests:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Python 3
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.x"
 
       - name: Install dependencies
         run: |
-          pip install pandas sqlalchemy
+          pip install --upgrade pip
+          pip install pandas sqlalchemy pytest
 
-      - name: Run test script
+      - name: Run tests
         run: |
-          chmod +x project/test.sh
-          project/test.sh
+          python3 -m unittest discover -s ./project -p "test.py"
