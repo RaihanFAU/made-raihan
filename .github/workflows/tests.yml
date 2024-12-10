@@ -20,7 +20,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install --upgrade pip
-          pip install pandas sqlalchemy pytest
+          pip install pandas sqlalchemy pytest kaggle
 
       - name: Run tests
         run: |
