@@ -28,7 +28,8 @@ jobs:
         echo '{"username":"${{ secrets.KAGGLE_USER_NAME }}","key":"${{ secrets.KAGGLE_KEY }}"}' > ~/.kaggle/kaggle.json
         chmod 600 ~/.kaggle/kaggle.json 
 
-    - name: Pipeline Test
+    - name: Pipeline Tests
+    #there is an issue with the pipeline. tried again and again and found error. I am working on it and fix this as early as possible.
       run: |
         chmod +x ./project/test.sh
         ./project/test.sh
