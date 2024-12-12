@@ -1,4 +1,4 @@
-name: ProjectTests
+name: projectTest
 
 on:
   push:
@@ -6,29 +6,34 @@ on:
       - main
 
 jobs:
-  run-tests:
+  run-pipeline-tests:
     runs-on: ubuntu-latest
+
+    env:
+      KAGGLE_USER_NAME: ${{ secrets.KAGGLE_USER_NAME }}
+      KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - name: Checkout Repository
+      uses: actions/checkout@v3
 
-      - name: Set up Python 3
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.x"
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
 
-      - name: Install dependencies
-        run: |
-          pip install --upgrade pip
-          pip install pandas sqlalchemy pytest kaggle
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r ./project/requirements.txt
 
-      - name: Set up Kaggle API
-        env:
-          KAGGLE_CONFIG_DIR: $HOME/.config
-        run: |
-          mkdir -p $KAGGLE_CONFIG_DIR
-          cp ./kaggle.json $KAGGLE_CONFIG_DIR/
+    - name: Set Kaggle Credentials
+      run: |
+        mkdir -p ~/.kaggle
+        echo '{"username":"${{ secrets.KAGGLE_USER_NAME }}","key":"${{ secrets.KAGGLE_KEY }}"}' > ~/.kaggle/kaggle.json
+        chmod 600 ~/.kaggle/kaggle.json 
 
-      - name: Run tests
-        run: |
-          python3 -m unittest discover -s ./project -p "test.py"
+    - name: Pipeline Tests
+      run: |
+        chmod +x ./project/tests.sh
+        ./project/tests.sh
