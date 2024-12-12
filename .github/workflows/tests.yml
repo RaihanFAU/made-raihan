@@ -27,7 +27,7 @@ jobs:
           KAGGLE_CONFIG_DIR: $HOME/.config
         run: |
           mkdir -p $KAGGLE_CONFIG_DIR
-          cp /path/to/kaggle.json $KAGGLE_CONFIG_DIR/
+          cp ./kaggle.json $KAGGLE_CONFIG_DIR/
 
       - name: Run tests
         run: |
