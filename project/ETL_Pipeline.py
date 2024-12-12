@@ -13,7 +13,7 @@ class ETLPipeline:
         self.dataset_kaggle = "nikhilkohli/us-stock-market-data-60-extracted-features"
         self.csv_file_name = "AMZN.csv"  
         # Columns to process
-        self.columns_to_numeric = ['open', 'high', 'low', 'close', 'volume', 'adjusted_close']
+        self.columns_to_numeric = ['open', 'high', 'low', 'volume']
 
     def extract(self):
         """
@@ -22,6 +22,7 @@ class ETLPipeline:
         try:
             # Download the Kaggle dataset
             logging.info(f"Downloading dataset from Kaggle: {self.dataset_kaggle}")
+            kaggle.api.authenticate()
             kaggle.api.dataset_download_files(self.dataset_kaggle, path='.', unzip=True)
             
             # Check if the specific CSV file exists after extraction
