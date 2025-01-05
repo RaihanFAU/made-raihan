@@ -1,2 +1,2 @@
 #!/bin/bash
-python3 .. /project/ETL_Pipeline.py
+python3 ./project/pipeline.py
