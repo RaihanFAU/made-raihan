@@ -8,13 +8,14 @@ import zipfile
 
 class StockDataPipeline:
     def __init__(self, datasets):
+    
         self.datasets = datasets
         self.dataframes = {}
         self.api = KaggleApi()
         self.api.authenticate()
 
         self.data_dir = os.path.join(os.getcwd(), "data")  
-        os.makedirs(self.data_dir, exist_ok=True)  
+        os.makedirs(self.data_dir, exist_ok=True) 
 
     def download_and_load_data(self):
         self.dataframes ['global_stock'] = None
@@ -31,7 +32,7 @@ class StockDataPipeline:
                              # only selected file name will be saved
                             with zip_ref.open(file_name) as csv_file:
                                 # Load each CSV file into a separate DataFrame
-                                if i==0 and file_name.split('/')[-1].replace('.csv', '') in ['AMZN', 'GOOGL'] :
+                                if i==0 and file_name.split('/')[-1].replace('.csv', '') in ['AMZN'] :
 
                                     df = pd.read_csv(csv_file, encoding="ISO-8859-1") 
                                     self.dataframes[file_name.split('/')[-1].replace('.csv', '')] = df
@@ -44,17 +45,19 @@ class StockDataPipeline:
         
 
     def preprocess_data(self):
+        
         for name, df in self.dataframes.items():
             print(f"Preprocessing dataset: {name}")
-            df.dropna(thresh=2, inplace=True)
+            df.dropna(thresh=2, inplace=True) 
 
             for column in df.columns:
                 if pd.api.types.is_numeric_dtype(df[column]):
-                    df[column].fillna(df[column].mean(), inplace=True) 
+                    df[column].fillna(df[column].mean(), inplace=True)  
                 else:
                     df[column].fillna("Unknown", inplace=True) 
 
     def save_to_sqlite(self, db_name="stock_data"):
+       
         self.db_path = os.path.join(self.data_dir, f"{db_name}.sqlite")
         engine = create_engine(f"sqlite:///{self.db_path}", echo=False)
 
