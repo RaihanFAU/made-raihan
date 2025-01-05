@@ -41,13 +41,13 @@ jobs:
     # Step 5: Run the Python pipeline
     - name: Run Pipeline
       run: |
-        python ./project/main.py
+        python ./project/pipeline.py
 
     # Step 6: Run Tests
     - name: Run Tests
       run: |
-        chmod +x ./project/test.sh
-        ./project/test.sh
+        chmod +x ./project/tests.sh
+        ./project/tests.sh
 
     # Step 7: Lint and Code Quality Checks (Optional)
     - name: Lint Code
