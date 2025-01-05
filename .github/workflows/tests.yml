@@ -38,11 +38,6 @@ jobs:
         echo '{"username":"${{ secrets.KAGGLE_USER_NAME }}","key":"${{ secrets.KAGGLE_KEY }}"}' > ~/.kaggle/kaggle.json
         chmod 600 ~/.kaggle/kaggle.json 
 
-    # Step 5: Run the Python pipeline
-    - name: Run Pipeline
-      run: |
-        python ./project/pipeline.py
-
     # Step 6: Run Tests
     - name: Run Tests
       run: |
