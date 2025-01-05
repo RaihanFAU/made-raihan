@@ -8,15 +8,13 @@ import zipfile
 
 class StockDataPipeline:
     def __init__(self, datasets):
-        """Initialize the pipeline with dataset identifiers."""
         self.datasets = datasets
         self.dataframes = {}
         self.api = KaggleApi()
         self.api.authenticate()
 
-        # Setup paths
-        self.data_dir = os.path.join(os.getcwd(), "data")  # Use the current working directory
-        os.makedirs(self.data_dir, exist_ok=True)  # Ensure the 'data' folder exists
+        self.data_dir = os.path.join(os.getcwd(), "data")  
+        os.makedirs(self.data_dir, exist_ok=True)  
 
     def download_and_load_data(self):
         self.dataframes ['global_stock'] = None
@@ -46,19 +44,17 @@ class StockDataPipeline:
         
 
     def preprocess_data(self):
-        """Preprocess the datasets to handle missing values and basic cleaning."""
         for name, df in self.dataframes.items():
             print(f"Preprocessing dataset: {name}")
-            df.dropna(thresh=2, inplace=True)  # Remove rows with 2 or more missing values
+            df.dropna(thresh=2, inplace=True)
 
             for column in df.columns:
                 if pd.api.types.is_numeric_dtype(df[column]):
-                    df[column].fillna(df[column].mean(), inplace=True)  # Fill numeric NaNs with column mean
+                    df[column].fillna(df[column].mean(), inplace=True) 
                 else:
-                    df[column].fillna("Unknown", inplace=True)  # Fill non-numeric NaNs with "Unknown"
+                    df[column].fillna("Unknown", inplace=True) 
 
     def save_to_sqlite(self, db_name="stock_data"):
-        """Save the processed data to an SQLite database."""
         self.db_path = os.path.join(self.data_dir, f"{db_name}.sqlite")
         engine = create_engine(f"sqlite:///{self.db_path}", echo=False)
 
