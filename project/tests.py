@@ -19,23 +19,17 @@ class ETLPipelineTestCases(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-    
-        #Close the database connection and clean up after all tests.
         
        cls.engine.dispose()
        cls.connection.close()    
 
-
     def test_database_file_exists(self):
-        
-        #Test if the SQLite database file is created.
         
         print("Checking if the database file exists!")
         self.assertTrue(os.path.exists(self.pipeline.db_path), "Database does not exist.")
 
     def test_table_exists(self):
         
-
         self.inspector = sqlalchemy.inspect(self.engine)
 
         try:
@@ -49,20 +43,15 @@ class ETLPipelineTestCases(unittest.TestCase):
 
     def test_table_data(self):
         
-        #Test if the table contains data.
-        
         print("Checking if the table contains data!")
         try:
             result = self.connection.execute(
                 text("SELECT COUNT(*) FROM GOOGL")
             ).fetchone()
 
-            # Assert that the table has at least one row
             self.assertGreater(result[0], 0, "Table 'GOOGL' is empty.")
         except sqlalchemy.exc.OperationalError:
             self.fail("Could not query the database.")
-        
-        #Test if the transformed data matches expectations.
        
         print("Validating data integrity in the transformed dataset...")
         try:
