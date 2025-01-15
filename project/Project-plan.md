@@ -2,26 +2,31 @@
 
 ## Title
 <!-- Give your project a short title. -->
-Analysis and Visualization of Stock Market Trends in Major Tech and Financial Companies Using ETL and Machine Learning.
+Analysis and Visualization of Stock Market Trends in Major Tech and Financial Companies Using python.
 
 
 ## Main Question
 
 <!-- Think about one main question you want to answer based on the data. -->
 
-1. Can we use past data to forecast these firms' stock values or future trends?
+1. Do Amazon stock trends align with global stock market indices during key economic events?
 
 
 
 ## Description
- This project uses U.S. stock market data to analyze trends and explore the effectiveness of technical indicators for stock price prediction. By identifying patterns in stock prices, volumes, and technical metrics, this project aims to gain insights into market behavior and support trading strategy development.<br />
+ This project uses U.S. stock market(Amazon stock) data to analyze trends and explore the pricing alignment with global stock data. By identifying patterns in stock prices, volumes, and technical metrics, this project aims to gain indices relationship between Amazon stock and global stock market over the time.<br />
 
 ## Datasources
-### Datasource: U.S. Stock Market Data & Technical Indicators
+### Datasource: U.S. Stock Market Data & Technical Indicators(Amazon stock data 2010-2021)
 -*Metadata URL:* https://www.kaggle.com/datasets/nikhilkohli/us-stock-market-data-60-extracted-features <br/>
 -*Data URL:* https://www.kaggle.com/datasets/nikhilkohli/us-stock-market-data-60-extracted-features?select=AMZN.csv<br />
 -*Data Type:* CSV<br />
 The dataset includes daily stock data for various companies, featuring price data (open, high, low, close), volume, and 60+ technical indicators.
+### Datasource: Global Stock Market (2008-2023)
+-*Metadata URL:* https://www.kaggle.com/datasets/pavankrishnanarne/global-stock-market-2008-present <br/>
+-*Data URL:* https://www.kaggle.com/datasets/pavankrishnanarne/global-stock-market-2008-present?select=2008_Globla_Markets_Data.csv<br />
+-*Data Type:* CSV<br />
+The dataset includes daily stock data for various companies, featuring price data (open, high, low, close), volume, and 10+ technical indicators
 # Work Packages
 ### Data Collection
 - Import data for each stock into a pandas DataFrame.
